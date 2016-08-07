@@ -1,0 +1,6 @@
+---
+__nginx_user: nginx
+__nginx_group: nginx
+
+nginx_pid_file: /var/run/nginx.pid
+nginx_default_vhost: /etc/nginx/conf.d/default.conf

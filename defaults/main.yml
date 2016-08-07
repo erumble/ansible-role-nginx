@@ -1,0 +1,73 @@
+---
+################################
+# defaults used by setup tasks #
+################################
+# nginx_conf_template: ''
+# nginx_vhost_template: ''
+nginx_package_name: nginx
+nginx_remove_default_vhost: true
+
+###########################
+# defaults for nginx.conf #
+###########################
+
+nginx_access_log: /var/log/nginx/access.log main
+nginx_error_log: /var/log/nginx/error.log warn
+
+nginx_conf_path: /etc/nginx/conf.d
+nginx_conf_file: /etc/nginx/nginx.conf
+nginx_mime_file: /etc/nginx/mime.types
+
+nginx_worker_processes: "{{ ansible_processor_vcpus | default(ansible_processor_count) }}"
+nginx_worker_connections: 1024
+nginx_multi_accept: off
+
+nginx_sendfile: on
+nginx_tcp_nodelay: on
+nginx_tcp_nopush: on
+
+nginx_keepalive_timeout: 65
+
+nginx_extra_conf_options: ""
+# example nginx_extra_conf_options, written in the main context of nginx.conf
+#   nginx_extra_conf_options: |
+#     env VARIABLE; # to preserve an env variable
+#     env VARIABLE=value; # to assign an env variable
+
+nginx_extra_http_options: ""
+# example nginx_extra_http_options, written in the http context of nginx.conf
+#   nginx_extra_http_options: |
+#     proxy_buffering off;
+#     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#     proxy_set_header X-Real-IP $remote_addr;
+#     proxy_set_header Host $http_host;
+
+nginx_gzip_settings: ""
+# example nginx_gzip_settings, written in the http context of nginx.conf
+#   nginx_gzip_settings: |
+#     gzip on;
+#     gzip_disable "msie6";
+#     gzip_vary on;
+#     gzip_proxied any;
+#     gzip_comp_level 6;
+#     gzip_buffers 16 8k;
+#     gzip_http_version 1.1;
+#     gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+###############################
+# defaults for vhost template #
+###############################
+
+nginx_vhosts: []
+# example nginx_vhost
+# nginx_vhosts:
+#   - listen: "80 default_server"
+#     server_name: "example.com"
+#     root: "/path/to/root"
+#     index: "index.html"
+#     error_page: "/path/to/error.html"
+#     access_log: "/path/to/access.log"
+#     error_log: "/path/to/error.log"
+#     extra_server_options: |
+#       some_option: some_value;
+#       another_option: another_value;

@@ -1,0 +1,27 @@
+---
+# nginx configuration
+- name: nginx Configure - create /etc/nginx/nginx.conf
+  template:
+    src: "{{ nginx_conf_template_actual }}"
+    dest: /etc/nginx/nginx.conf
+  notify: restart nginx
+
+# Set up virtual host
+- name: "nginx Configure - create /etc/nginx/sites-available/{{ nginx_vhost_filename }}"
+  template:
+    src: "{{ nginx_vhost_template_actual }}"
+    dest: "/etc/nginx/sites-available/{{ nginx_vhost_filename }}"
+
+- name: "nginx Configure - symlink {{ nginx_vhost_filename }} to /etc/nginx/sites-enabled/"
+  file:
+    src: "/etc/nginx/sites-available/{{ nginx_vhost_filename }}"
+    dest: "/etc/nginx/sites-enabled/{{ nginx_vhost_filename }}"
+    state: link
+  notify: reload nginx
+
+- name: nginx Configure - remove default vhost
+  file:
+    path: "{{ nginx_default_vhost }}"
+    state: absent
+  when: nginx_remove_default_vhost | bool
+  notify: reload nginx

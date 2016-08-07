@@ -1,0 +1,35 @@
+---
+- name: nginx Variable Setup - include os-specific variables
+  include_vars: "{{ ansible_distribution | lower }}.yml"
+
+- name: nginx Variable Setup - define nginx_user
+  set_fact:
+    nginx_user: "{{ __nginx_user }}"
+  when: nginx_user is not defined
+
+- name: nginx Variable Setup - define nginx_group
+  set_fact:
+    nginx_group: "{{ __nginx_group }}"
+  when: nginx_group is not defined
+
+- name: nginx Variable Setup - use custom nginx.conf template
+  set_fact:
+    nginx_conf_template_actual: "{{ playbook_dir }}/templates/{{ nginx_conf_template }}"
+  when: nginx_conf_template is defined
+
+- name: nginx Variable Setup - use provided nginx.conf template
+  set_fact:
+    nginx_conf_template_actual: nginx.conf.j2
+  when: nginx_conf_template is not defined
+
+- name: nginx Variable Setup - use custom vhost template
+  set_fact:
+    nginx_vhost_template_actual: "{{ playbook_dir }}/templates/{{ nginx_vhost_template }}"
+    nginx_vhost_filename: "{{ nginx_vhost_template | regex_replace('(.*).j2', '\\1') }}"
+  when: nginx_vhost_template is defined
+
+- name: nginx Variable Setup - use provided vhost template
+  set_fact:
+    nginx_vhost_template_actual: vhosts.conf.j2
+    nginx_vhost_filename: vhosts.conf
+  when: nginx_vhost_template is not defined
