@@ -1,0 +1,20 @@
+---
+ansible:
+  playbook: playbook.yml
+  sudo: True
+
+docker:
+  containers:
+  - name: centos-7
+    ansible_groups:
+      - group1
+    image: erumble/cent7-systemd
+    image_version: latest
+    volume_mounts:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    command: "/usr/sbin/init"
+  - name: centos-6
+    ansible_groups:
+      - group2
+    image: erumble/cent6
+    image_version: latest

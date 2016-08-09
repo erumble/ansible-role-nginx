@@ -1,2 +1,14 @@
 # ignore vim swp files
 **/*.swp
+
+# ignore vagrant's stuff
+.vagrant
+
+# ignore ansible retry files
+**/*.retry
+
+# ignore molecule tmp dir
+.molecule
+
+# ignore cache directory for testinfra
+tests/.cache
