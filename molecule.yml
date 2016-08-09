@@ -18,3 +18,6 @@ docker:
       - group2
     image: erumble/cent6
     image_version: latest
+
+testinfra:
+  v: yes
