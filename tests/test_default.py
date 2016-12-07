@@ -1,6 +1,6 @@
 from testinfra.utils.ansible_runner import AnsibleRunner
 
-testinfra_hosts = AnsibleRunner('.molecule/ansible_inventory').get_hosts('all')
+testinfra_hosts = AnsibleRunner('.molecule/ansible_inventory').get_hosts('group1')
 
 
 def test_hosts_file(File):
@@ -16,3 +16,7 @@ def test_nginx_service(Service):
   nginx = Service('nginx')
   assert nginx.is_running
   assert nginx.is_enabled
+
+def test_vhosts_file(File):
+  vhosts = File('/etc/nginx/sites-available/vhosts.conf')
+  assert not vhosts.exists

@@ -11,12 +11,14 @@
   template:
     src: "{{ nginx_vhost_template_actual }}"
     dest: "/etc/nginx/sites-available/{{ nginx_vhost_filename }}"
+  when: (using_custom_vhost_template or (nginx_vhosts != []))
 
 - name: "nginx Configure - symlink {{ nginx_vhost_filename }} to /etc/nginx/sites-enabled/"
   file:
     src: "/etc/nginx/sites-available/{{ nginx_vhost_filename }}"
     dest: "/etc/nginx/sites-enabled/{{ nginx_vhost_filename }}"
     state: link
+  when: (using_custom_vhost_template or (nginx_vhosts != []))
   notify: reload nginx
 
 - name: nginx Configure - remove default vhost

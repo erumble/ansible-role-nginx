@@ -26,10 +26,12 @@
   set_fact:
     nginx_vhost_template_actual: "{{ playbook_dir }}/templates/{{ nginx_vhost_template }}"
     nginx_vhost_filename: "{{ nginx_vhost_template | regex_replace('(.*).j2', '\\1') }}"
+    using_custom_vhost_template: true
   when: nginx_vhost_template is defined
 
 - name: nginx Variable Setup - use provided vhost template
   set_fact:
     nginx_vhost_template_actual: vhosts.conf.j2
     nginx_vhost_filename: vhosts.conf
+    using_custom_vhost_template: false
   when: nginx_vhost_template is not defined
