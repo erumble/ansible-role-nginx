@@ -11,4 +11,7 @@
 .molecule
 
 # ignore cache directory for testinfra
-tests/.cache
+**/.cache
+
+# who cares about __ directories anyway?
+**/__*
